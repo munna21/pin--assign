@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pin Generator</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="pin-generator half-width">
+                    <input class="form-control" type="text"id="random-input" >
+     
+        <button class="generate-btn" id="randomGenerate">Generate Pin</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="input-section half-width">
+                    <input class="form-control" type="text"id='calculate-input'>
+                    <div class="numbers">
+                        <div class="calc-body">
+                            <div class="calc-button-row">
+                              <div class="button" >7</div>
+                              <div class="button" >8</div>
+                              <div class="button">9</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button">4</div>
+                              <div class="button">5</div>
+                              <div class="button">6</div>
+                            </div>
+                            <div class="calc-button-row">
+                              <div class="button">1</div>
+                              <div class="button">2</div>
+                              <div class="button">3</div>
+                            </div>
+                            <div class="calc-button-row">
+                                <div class="button" id="backspace" value="<"><</div>
+                                <div class="button"onclick="number(0)">0</div>
+                                <div class="button" id="clear">C</div>
+                            </div>
+                            <div>
+                                <button type="submit" class="submit-btn"id="submitBtn">Submit</button>
+                                <p class="action-left">3 try left</p>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="notify-section" >
+            <p class="notify" id="hidecross">❌ Pin Didn't Match, Please try again</p>
+            <p class="notify" id="hideTikmark">✅ Pin Matched... Secret door is opening for you</p>
+        </div>
+    </div>
+    <script> 
+
+let isMatchNumber;
+let isMatchcal;
+document.getElementById('randomGenerate').addEventListener('click', function() {
+    let numberRandom = Math.floor(1000 + Math.random() * 9000);
+    isMatchNumber = numberRandom;
+    document.getElementById('random-input').value = isMatchNumber;
+
+    chackPin();
+
+})
+
+function pinNumber() {
+    var calculateBtn = document.getElementsByClassName('button');
+    for (let i = 0; i < calculateBtn.length; i++) {
+        calculateBtn[i].addEventListener('click', function() {
+            let outputCalculateNum = document.getElementById('calculate-input');
+            isMatchcal = outputCalculateNum;
+            isMatchcal.value = isMatchcal.value + this.innerText;
+            chackPin();
+        })
+    }
+
+}
+
+pinNumber();
+
+function chackPin(){
+const submitBtn=  document.getElementById('submitBtn');
+submitBtn.addEventListener('click',function(){
+
+    if (isMatchcal.value == isMatchNumber) {
+const displayNotify=document.getElementById('hideTikmark');
+displayNotify.style.display="block"
+
+}
+   if(isMatchcal.value != isMatchNumber){
+
+   displayrednotify=document.getElementById('hidecross');
+   displayrednotify.style.display="block"
+
+   }
+
+
+})
+
+
+
+}
+
+document.getElementById('clear').addEventListener('click', function() {
+    isMatchcal.value = ""
+})
+
+
+
+document.getElementById('backspace').addEventListener('click', function() {
+    isMatchcal.value = isMatchcal.value.substring(0, isMatchcal.value.length - 1);
+})
+
+
+    
+    
+
+
+
+// Alert area display//
+
+const hideCross=document.getElementById('hidecross');
+hideCross.style.display="none";
+
+
+const hideTikmark=document.getElementById('hideTikmark');
+hideTikmark.style.display="none";
+
+
+
+    </script>
+</body>
+</html>
